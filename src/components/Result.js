@@ -1,13 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Result = ({ value }) => {
-  return (
-    <div className="result">
-      <span>{value}</span>
-    </div>
-  );
-};
+const Result = ({ value }) => (
+  <div className="result">
+    <span>{value}</span>
+  </div>
+);
 
 Result.propType = {
   value: PropTypes.string.isRequired,
