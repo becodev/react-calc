@@ -1,24 +1,41 @@
-import React from "react";
+/* eslint no-eval: 0 */
+import React, { useState } from "react";
 import Functions from "./components/Functions";
 import MathOperations from "./components/MathOperations";
 import Result from "./components/Result";
 import Numbers from "./components/Numbers";
+import words from "lodash.words";
 import "./App.css";
 
 const App = () => {
+  const [stack, setStack] = useState("");
+
+  const items = words(stack, /[^-^+^*^/]+/g);
+
+  const value = items.length > 0 ? items[items.length - 1] : "0";
+
   return (
     <div className="react-calculator">
-      <Result value={"0"} />
-      <Numbers
-        onClickNumber={(number) => console.log("Click en number", number)}
-      />
+      <Result value={value} />
+      <Numbers onClickNumber={(number) => setStack(`${stack}${number}`)} />
       <Functions
-        onContentClear={() => console.log("clear")}
-        onDelete={console.log("onDelete")}
+        onContentClear={() => {
+          setStack("");
+        }}
+        onDelete={() => {
+          if (stack.length > 0) {
+            const newStack = stack.substring(0, stack.length - 1);
+            setStack(newStack);
+          }
+        }}
       />
       <MathOperations
-        onClickOperation={(operation) => console.log(operation)}
-        onClickEqual={(equal) => console.log(equal)}
+        onClickOperation={(operation) => {
+          setStack(`${stack}${operation}`);
+        }}
+        onClickEqual={(equal) => {
+          setStack(eval(stack).toString());
+        }}
       />
     </div>
   );
