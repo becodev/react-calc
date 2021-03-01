@@ -1,5 +1,5 @@
 /* eslint no-eval: 0 */
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import Functions from "./components/Functions";
 import MathOperations from "./components/MathOperations";
 import Result from "./components/Result";
@@ -7,7 +7,7 @@ import Numbers from "./components/Numbers";
 import words from "lodash.words";
 import "./App.css";
 
-const App = () => {
+const App: FC = () => {
   const [stack, setStack] = useState("");
 
   const items = words(stack, /[^-^+^*^/]+/g);
@@ -15,7 +15,7 @@ const App = () => {
   const value = items.length > 0 ? items[items.length - 1] : "0";
 
   return (
-    <div className="react-calculator">
+    <main className="react-calculator">
       <Result value={value} />
       <Numbers onClickNumber={(number) => setStack(`${stack}${number}`)} />
       <Functions
@@ -37,7 +37,7 @@ const App = () => {
           setStack(eval(stack).toString());
         }}
       />
-    </div>
+    </main>
   );
 };
 
